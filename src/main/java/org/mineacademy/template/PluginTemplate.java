@@ -62,6 +62,9 @@ public final class PluginTemplate extends SimplePlugin {
 		// Pig
 		if (event.getRightClicked().getType() == EntityType.PIG)
 			event.getRightClicked().setGlowing(true);
+		// Squid
+		if (event.getRightClicked().getType() == EntityType.SQUID)
+			event.getRightClicked().setSilent(true);
 
 	}
 
