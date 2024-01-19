@@ -1,9 +1,13 @@
 package org.mineacademy.template;
 
+import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.mineacademy.fo.plugin.SimplePlugin;
+import org.mineacademy.fo.remain.CompMaterial;
 
 /**
  * PluginTemplate is a simple template you can use every time you make
@@ -41,6 +45,7 @@ public final class PluginTemplate extends SimplePlugin {
 		for (int playerId : playerIds) {
 			System.out.println("ID: " + playerId);
 		}
+
 	}
 
 	/* ------------------------------------------------------------------------------- */
@@ -74,6 +79,32 @@ public final class PluginTemplate extends SimplePlugin {
 		if (event.getRightClicked().getType() == EntityType.VILLAGER)
 			event.getRightClicked().setGravity(false);
 
+	}
+
+	@EventHandler
+	public void onRightClickAnything(PlayerInteractEvent event) {
+		System.out.println("We've started handling clicking event.");
+
+		try {
+			if (event.getClickedBlock().getType() == CompMaterial.GRASS_BLOCK.getMaterial()) {
+				handleClickingGrass(event.getClickedBlock(), event.getPlayer());
+			}
+
+			System.out.println("Bro's midas but for diamonds.");
+
+		} catch (NullPointerException ex) {
+			System.out.println("Got an NPE");
+
+		} finally {
+			System.out.println("...and we're done!");
+		}
+
+	}
+
+	void handleClickingGrass(Block block, Player player) {
+		block.setType(CompMaterial.DIAMOND_BLOCK.getMaterial());
+
+		player.sendMessage("You've turned this grass block into a diamond!");
 	}
 
 }
