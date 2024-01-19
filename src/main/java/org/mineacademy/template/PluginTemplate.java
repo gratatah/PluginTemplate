@@ -20,61 +20,28 @@ public final class PluginTemplate extends SimplePlugin {
 	@Override
 	protected void onPluginStart() {
 
-		//int result = 4;
-		//System.out.println(result); //This spits out 4
-
-		//result = result + 5; //(using result as a reference)
-		//System.out.println(result); //This spits out 9
-
-		//result = 4 + 5;
-		//System.out.println(result); //This spits out 9
-
-		//System.out.println("Modulo: " + (15 % 4)); // 15/4 = 3.75 (take the 3 remove the .75) 3*4 = 12. 15-12 = 3
-
-		int apples = 5;
-		apples += 5; // adds 5
-		++apples; // adds 1
-		apples *= 4; // multiplies apples (11) by 4
-		System.out.println(apples); //44
-		apples /= 4; //divides it by 4
-		System.out.println(apples); //sout apples again (11)
-
-		int test = 999;
-		int test2 = 991;
-
-		if (test != test2) {
-			System.out.println("999 does not equal 991 lol");
-			System.out.println("test test test");
-		} else if (5 == 5) {
-			System.out.println("5 does equal 5");
-			System.out.println("test2 test2 test2");
-		} else {
-			System.out.println("999 equals 991 dont ask me how");
-			System.out.println("you should never see this message!!!");
+		//Below is a loop that states the starting number is one and doesnt stop the loop until it is < 10
+		for (int number = 1; number < 10; number++) {
+			System.out.println("THE NUMBER IS: " + number);
 		}
 
-		boolean result1 = test == test2;
-		boolean result2 = test != test2;
-		boolean result3 = test > test2;
-		boolean result4 = test < test2;
-		boolean result5 = test >= test2;
-		boolean result6 = test <= test2;
+		//Below the number of apples is declared to be 1, then it adds 1 until it gets to 10 apples then once its 10 apples it prints "We have 10 apples now"
+		int apples = 1;
+		while (apples < 10) {
+			System.out.println("Less than 10 apples! Adding 1: " + apples);
+			++apples;
+			if (apples == 10) {
+				System.out.println("Okay we have 10 apples now, we can chill");
+			}
+		}
 
-
-		// String testing123123 = "Hello";
-		// testing123123 = "another testing123123";
-
-		/*
-		These lines will be printed out in the console when
-		the server loads the plugin
-		 */
-
-		// System.out.println(1);
-		// System.out.println("Hello " + 1 + " Knock, knock!");
-		// System.out.println(1 + 1 + 100 / 10);
-
+		//Below makes a new list of player ids.
+		int[] playerIds = new int[]{1, 2, 3, 4};
+		//Below is a loop for listing all the player ids. Once it lists all playerIds, it stops the loop
+		for (int playerId : playerIds) {
+			System.out.println("ID: " + playerId);
+		}
 	}
-
 
 	/* ------------------------------------------------------------------------------- */
 	/* Events */
@@ -103,8 +70,8 @@ public final class PluginTemplate extends SimplePlugin {
 		// Pig
 		if (event.getRightClicked().getType() == EntityType.PIG)
 			event.getRightClicked().setGlowing(true);
-		// Squid
-		if (event.getRightClicked().getType() == EntityType.SQUID)
+		// Villager
+		if (event.getRightClicked().getType() == EntityType.VILLAGER)
 			event.getRightClicked().setGravity(false);
 
 	}
