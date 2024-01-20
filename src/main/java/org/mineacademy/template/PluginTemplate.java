@@ -62,10 +62,10 @@ public final class PluginTemplate extends SimplePlugin {
 	public void onRightClick(PlayerInteractEntityEvent event) {
 
 		// Sheep
-		if (event.getRightClicked().getType() == EntityType.SHEEP)
+		if (event.getRightClicked().getType() == EntityType.SHEEP) {
 			event.getRightClicked().setInvulnerable(true);
-		if (event.getRightClicked().getType() == EntityType.SHEEP)
 			event.getRightClicked().getWorld().createExplosion(event.getRightClicked().getLocation(), 3);
+		}
 		// Enderman
 		if (event.getRightClicked().getType() == EntityType.ENDERMAN)
 			event.getRightClicked().setCustomName("test");
@@ -89,22 +89,28 @@ public final class PluginTemplate extends SimplePlugin {
 			if (event.getClickedBlock().getType() == CompMaterial.GRASS_BLOCK.getMaterial()) {
 				handleClickingGrass(event.getClickedBlock(), event.getPlayer());
 			}
-
-			System.out.println("Bro's midas but for diamonds.");
-
 		} catch (NullPointerException ex) {
 			System.out.println("Got an NPE");
-
 		} finally {
 			System.out.println("...and we're done!");
 		}
-
 	}
 
 	void handleClickingGrass(Block block, Player player) {
 		block.setType(CompMaterial.DIAMOND_BLOCK.getMaterial());
-
 		player.sendMessage("You've turned this grass block into a diamond!");
-	}
 
+		/*
+		 *  Can't seem to figure out how to fire these blocks below whenever a player takes damage and I don't want to break anything.
+		 *  But this function happens when it "handle's clicking grass" Maybe I need to create a new event, probably
+		 *  something called "player taking damage" or something like that. Oh well, I tried. It kinda works lol. Can't wait to learn more!
+		 */
+
+		boolean lowOnHealth = player.getHealth() < 2;
+		if (lowOnHealth) {
+			player.sendMessage("You are low on health!");
+		} else {
+			player.sendMessage("You're healthy!");
+		}
+	}
 }
