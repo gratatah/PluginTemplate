@@ -17,7 +17,7 @@ import org.mineacademy.fo.remain.CompMaterial;
  * It uses Foundation for fast and efficient development process.
  */
 public final class PluginTemplate extends SimplePlugin {
-
+	
 	/**
 	 * Automatically perform login ONCE when the plugin starts.
 	 */
