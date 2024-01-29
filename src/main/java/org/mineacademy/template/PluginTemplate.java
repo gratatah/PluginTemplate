@@ -1,11 +1,15 @@
 package org.mineacademy.template;
 
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.remain.CompMaterial;
 
@@ -17,7 +21,7 @@ import org.mineacademy.fo.remain.CompMaterial;
  * It uses Foundation for fast and efficient development process.
  */
 public final class PluginTemplate extends SimplePlugin {
-	
+
 	/**
 	 * Automatically perform login ONCE when the plugin starts.
 	 */
@@ -63,7 +67,6 @@ public final class PluginTemplate extends SimplePlugin {
 
 		// Sheep
 		if (event.getRightClicked().getType() == EntityType.SHEEP) {
-			event.getRightClicked().setInvulnerable(true);
 			event.getRightClicked().getWorld().createExplosion(event.getRightClicked().getLocation(), 3);
 		}
 		// Enderman
@@ -80,6 +83,7 @@ public final class PluginTemplate extends SimplePlugin {
 			event.getRightClicked().setGravity(false);
 
 	}
+
 
 	@EventHandler
 	public void onRightClickAnything(PlayerInteractEvent event) {
@@ -113,4 +117,29 @@ public final class PluginTemplate extends SimplePlugin {
 			player.sendMessage("You're healthy!");
 		}
 	}
+
+	@EventHandler
+	public void onJoin(PlayerJoinEvent event) {
+		Player player = event.getPlayer();
+		PlayerInventory inventory = player.getInventory();
+		ItemStack[] contents = inventory.getContents();
+
+		for (int slot = 0; slot < contents.length; slot++) {
+			System.out.println("Player's slot " + slot + " has the item: " + contents[slot]);
+			ItemStack item = contents[slot];
+			boolean isDiamond = item != null && item.getType() == Material.DIAMOND;
+
+			if (item == null || isDiamond) {
+				int diamondAmount = isDiamond ? item.getAmount() : 0;
+				contents[slot] = new ItemStack(Material.DIAMOND, diamondAmount + 1);
+				player.sendMessage("1 Diamond has been added to your " + slot + " slot.");
+
+				break;
+			}
+		}
+
+		inventory.setContents(contents);
+
+	}
+
 }
