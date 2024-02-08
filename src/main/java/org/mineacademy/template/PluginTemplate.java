@@ -1,5 +1,6 @@
 package org.mineacademy.template;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
@@ -11,7 +12,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.mineacademy.fo.model.LimitedQueue;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.remain.CompMaterial;
 
@@ -25,7 +25,7 @@ public final class PluginTemplate extends SimplePlugin {
 			Material.NETHER_STAR
 	));
 
-	private final Queue<String> messages = new LimitedQueue<>(5);
+	private final Map<String, String> lastPlayerMessage = new HashMap<>();
 
 	@Override
 	protected void onPluginStart() {
@@ -82,8 +82,19 @@ public final class PluginTemplate extends SimplePlugin {
 
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent event) {
-		messages.add(event.getMessage());
-		System.out.println("Last 5 messages from all players: " + this.messages);
+		Player player = event.getPlayer();
+		String playerName = player.getName();
+		String message = event.getMessage();
+
+		String lastMessage = this.lastPlayerMessage.get(playerName);
+
+		if (lastMessage != null && lastMessage.equalsIgnoreCase(message)) {
+			player.sendMessage(ChatColor.RED + "Please don't repeat the same message. " + message);
+
+			event.setCancelled(true);
+		} else
+			this.lastPlayerMessage.put(playerName, message);
+
 	}
 
 
